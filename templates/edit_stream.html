@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="row mt-3">
+  <div class="col-lg-10">
+    <div class="tab-pane" id="edit">
+      <form action="/edit_stream/{{st.stream_id}}" method="POST">
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label form-control-label">Stream name</label>
+          <div class="col-lg-9">
+            <input class="form-control" type="text" name="stream" value="{{st.stream}}" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label form-control-label">Course</label>
+          <div class="col-lg-9">
+            <input class="form-control" type="text" name="course" value="{{st.course}}" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label form-control-label">Duration (Semesters)</label>
+          <div class="col-lg-9">
+            <input class="form-control" type="number" name="duration" value="{{st.duration}}" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label form-control-label">Course Fees</label>
+          <div class="col-lg-9">
+            <input class="form-control" type="number" name="fees" value="{{st.fees}}" required>
+          </div>
+        </div>
+        <!-- <div class="form-group row">
+                            <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                            <div class="col-lg-9">
+                                <input class="form-control" type="email" value="">
+                            </div>
+                        </div> -->
+        <!-- <div class="form-group row">
+                  <label class="col-lg-3 col-form-label form-control-label">Subject</label>
+                  <div class="col-lg-9">
+                    <input class="form-control" type="text" value="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-lg-3 col-form-label form-control-label">Stream</label>
+                  <div class="col-lg-9">
+                    <input class="form-control" type="text" value="">
+                  </div>
+                </div> -->
+
+
+        <div class="form-group row">
+          <label class="col-lg-3 col-form-label form-control-label"></label>
+          <div class="col-lg-9">
+            <input type="submit" class="btn btn-primary" value="Save Changes">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

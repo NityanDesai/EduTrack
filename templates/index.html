@@ -1,0 +1,443 @@
+{% extends "layout.html" %}
+{% block body %}
+<!--Start Dashboard Content-->
+<h5 class="logo-text">Admin's Dashboard</h5>
+<div class="card mt-3">
+  <div class="card-content">
+    <div class="row row-group m-0">
+
+      <div class="col-12 col-lg-8 col-xl-3 border-light">
+        <a href="/faculties">
+          <div class="card-body">
+            <p class="mb-0 text-white small-font">Total Faculties</p>
+            <h5 class="text-white mb-0">{{len_fac}}</h5>
+            <!-- <div class="progress my-3" style="height:3px;">
+                      <div class="progress-bar" style="width:55%"></div>
+                    </div> -->
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 col-lg-8 col-xl-3 border-light">
+        <a href="/subjects">
+          <div class="card-body">
+            <p class="mb-0 text-white small-font">Total Subjects</p>
+            <h5 class="text-white mb-0">{{len_sub}}</h5>
+            <!-- <div class="progress my-3" style="height:3px;">
+                      <div class="progress-bar" style="width:55%"></div>
+                    </div> -->
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 col-lg-8 col-xl-3 border-light">
+        <a href="/stream">
+          <div class="card-body">
+            <p class="mb-0 text-white small-font">Total Streams</p>
+            <h5 class="text-white mb-0">{{len_st}}</h5>
+            <!-- <div class="progress my-3" style="height:3px;">
+                      <div class="progress-bar" style="width:55%"></div>
+                    </div> -->
+          </div>
+        </a>
+      </div>
+
+      <div class="col-12 col-lg-8 col-xl-3 border-light">
+        <a href="/student">
+          <div class="card-body">
+            <p class="mb-0 text-white small-font">Total Students</p>
+            <h5 class="text-white mb-0">{{len_students}}</h5>
+            <!-- <div class="progress my-3" style="height:3px;">
+                      <div class="progress-bar" style="width:55%"></div>
+                    </div> -->
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="content-wrapper">
+          <div class="container-fluid">
+     -->
+<!-- <div class="row mt-3"> -->
+
+<!-- <div class="col-lg-8"> -->
+<div class="card">
+  <div class="card-body">
+    <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
+      <li class="nav-item">
+        <a href="javascript:void();" data-target="#profile" data-toggle="pill" class="nav-link active"><i
+            class="zmdi zmdi-account"></i> <span class="hidden-xs">Faculties</span></a>
+      </li>
+      <li class="nav-item">
+        <a href="javascript:void();" data-target="#students" data-toggle="pill" class="nav-link"><i
+            class="zmdi zmdi-account"></i> <span class="hidden-xs">Students</span></a>
+      </li>
+      <li class="nav-item">
+        <a href="javascript:void();" data-target="#messages" data-toggle="pill" class="nav-link"><i
+            class="zmdi zmdi-format-list-bulleted"></i> <span class="hidden-xs">Subjects</span></a>
+      </li>
+      <li class="nav-item">
+        <a href="javascript:void();" data-target="#stream" data-toggle="pill" class="nav-link"><i
+            class="zmdi zmdi-grid"></i> <span class="hidden-xs">Streams</span></a>
+      </li>
+      <!-- <li class="nav-item">
+                <a href="javascript:void();" data-target="#edit" data-toggle="pill" class="nav-link"><i
+                    class="zmdi zmdi-grid"></i> <span class="hidden-xs">Streams</span></a>
+              </li> -->
+    </ul>
+    <div class="tab-content p-4">
+      <div class="tab-pane active" id="profile">
+        <!-- <div class="row mt-3">
+          <div class="col-lg-10"> -->
+        <div class="tab-pane" id="edit">
+          {% for fac in all_fac %}
+          {% if fac.is_superuser == 1 %}
+          <hr>
+          <h5 class="card-title">
+            {{fac.name}} <div class="badge badge-success text-dark">Admin</div>
+            {% if fac.username == admin %}
+            <div class="badge badge-secondary text-dark">You</div>
+            <a href="/edit_faculty/{{fac.id}}" type="button"
+              class="badge badge-warning text-dark float-right mx-1">Edit</a>
+            {% endif %}
+            <p class="text-muted">{{fac.email}}</p>
+          </h5>
+          {% else %}
+          <hr>
+          <h5 class="card-title">
+            {{fac.name}} <div class="text-success float-right mx-1">₹ {{fac.salary}}</div>
+            <!-- Notes-->
+            <form action="/notes/{{fac.id}}" method="post">
+              <div type="button" class="icon-note float-right m-1" data-toggle="modal"
+                data-target="#exampleModalCenter{{fac.id}}"></div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter{{fac.id}}" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content bg-dark">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Notes</h5>
+                        <button type="button" class="text-white close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="message-text" class="col-form-label">Your Message:</label>
+                          <textarea class="form-control" name="note" id="message-text" required></textarea>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn badge float-left text-white"
+                          data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn badge float-left btn-success text-dark">Send as Email to
+                          {{fac.name}}</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </form>
+            <p class="text-muted">{{fac.email}}</p>
+          </h5>
+          {% endif %}
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <th>Subject</th>
+                <th>Stream</th>
+                <th>Semester</th>
+              </thead>
+              <tbody>
+                {% if fac.subjects["subjects"] != [] %}
+                {% for subject in fac.subjects["subjects"] %}
+                {% for sub in subs %}
+                {% if subject == sub.subject_id %}
+                <tr>
+                  <td>{{sub.subject}}</td>
+                  {% for st in sts %}
+                  {% if st.stream_id == sub.stream_id %}
+                  <td>{{st.stream}} ({{st.course}})</td>
+                  {% endif %}
+                  {% endfor %}
+                  {% if sub.sem == 1 %}
+                  <td>{{sub.sem}}<sup>st</sup></td>
+                  {% elif sub.sem == 2 %}
+                  <td>{{sub.sem}}<sup>nd</sup></td>
+                  {% elif sub.sem == 3 %}
+                  <td>{{sub.sem}}<sup>rd</sup></td>
+                  {% else %}
+                  <td>{{sub.sem}}<sup>th</sup></td>
+                  {% endif %}
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+                {% else %}
+                <td colspan="3">No subjects selected.</td>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+          <hr>
+          {% endfor %}
+        </div>
+        {% for fac in all_fac %}
+        
+        {% endfor %}
+
+
+        <!-- </div>
+                </div> -->
+
+        <!-- <h5 class="mb-3">User Profile</h5>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>About</h6>
+                            <p>
+                              Web Designer, UI/UX Engineer
+                            </p>
+                            <h6>Hobbies</h6>
+                            <p>
+                              Indie music, skiing and hiking. I love the great outdoors.
+                            </p>
+                          </div>
+                          <div class="col-md-6">
+                            <h6>Recent badges</h6>
+                            <a href="javascript:void();" class="badge badge-dark badge-pill">html5</a>
+                            <a href="javascript:void();" class="badge badge-dark badge-pill">react</a>
+                            <a href="javascript:void();" class="badge badge-dark badge-pill">codeply</a>
+                            <a href="javascript:void();" class="badge badge-dark badge-pill">angularjs</a>
+                            <a href="javascript:void();" class="badge badge-dark badge-pill">css3</a>
+                            <a href="javascript:void();" class="badge badge-dark badge-pill">jquery</a>
+                            <a href="javascript:void();" class="badge badge-dark badge-pill">bootstrap</a>
+                            <a href="javascript:void();" class="badge badge-dark badge-pill">responsive-design</a>
+                            <hr>
+                            <span class="badge badge-primary"><i class="fa fa-user"></i> 900 Followers</span>
+                            <span class="badge badge-success"><i class="fa fa-cog"></i> 43 Forks</span>
+                            <span class="badge badge-danger"><i class="fa fa-eye"></i> 245 Views</span>
+                          </div>
+                          <div class="col-md-12">
+                            <h5 class="mt-2 mb-3"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity
+                            </h5>
+                            <div class="table-responsive">
+                              <table class="table table-hover table-striped">
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <strong>Abby</strong> joined ACME Project Team in <strong>`Collaboration`</strong>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong>Gary</strong> deleted My Board1 in <strong>`Discussions`</strong>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong>Kensington</strong> deleted MyBoard3 in <strong>`Discussions`</strong>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong>John</strong> deleted My Board1 in <strong>`Discussions`</strong>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <strong>Skell</strong> deleted his post Look at Why this is.. in
+                                      <strong>`Discussions`</strong>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div> -->
+        <!--/row-->
+      </div>
+      <div class="tab-pane" id="students">
+        <!-- <div class="row mt-3">
+          <div class="col-lg-10"> -->
+        <div class="tab-pane" id="edit">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <!-- <th scope="col">ID</th> -->
+                <th scope="col">Student name</th>
+                <th scope="col">Roll no.</th>
+                <th scope="col">Stream</th>
+                <th scope="col">Fees</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%for stu in students%}
+              <tr>
+                <td>{{stu.s_name}}</td>
+                <td>{{stu.rollno}}</td>
+                {%for st in sts%}
+                {% if stu.stream_id == st.stream_id %}
+                {% if stu.sem == 1 %}
+                <td>{{st.stream}} ({{stu.sem}}<sup>st </sup>{{st.course}})</td>
+                {% elif stu.sem == 2 %}
+                <td>{{st.stream}} ({{stu.sem}}<sup>nd </sup>{{st.course}})</td>
+                {% elif stu.sem == 3 %}
+                <td>{{st.stream}} ({{stu.sem}}<sup>rd </sup>{{st.course}})</td>
+                {% else %}
+                <td>{{st.stream}} ({{stu.sem}}<sup>th </sup>{{st.course}})</td>
+                {% endif %}
+                {% if stu.fee_status > 0 %}
+                <td><form action="/fee_paid/{{stu.p_id}}" method="GET">
+                  <button type="submit" class="btn btn-outline-danger btn-block" style="text-align: center;">
+                    Due: ₹{{stu.fee_status * st.fees}}
+                  </button>
+                </form></td>
+                {%else%}
+                <td>
+                  <div class="btn btn-success btn-block" style="text-align: center;">
+                    Paid
+                  </div></td>
+                {% endif %}
+                {% endif %}
+                {%endfor%}
+              </tr>
+              {%endfor%}
+              </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane" id="messages">
+        <!-- <div class="alert alert-info alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                      <div class="alert-icon">
+                        <i class="icon-info"></i>
+                      </div>
+                      <div class="alert-message">
+                        <span><strong>Info!</strong> Lorem Ipsum is simply dummy text.</span>
+                      </div>
+                    </div> -->
+        <!-- <div class="row mt-3">
+                  <div class="col-lg-10"> -->
+        <div class="tab-pane" id="edit">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <!-- <th scope="col">ID</th> -->
+                  <th scope="col">Subject</th>
+                  <!-- <th scope="col">Email ID</th> -->
+                  <th scope="col">Semester</th>
+                  <th scope="col">Stream</th>
+                  <!-- <th colspan="2" scope="col">Actions</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                {%for sub in subs%}
+                <tr>
+                  <td>{{sub.subject}}</td>
+                  <td>{{sub.sem}}</td>
+                  {%for st in sts%}
+                  {% if sub.stream_id == st.stream_id %}
+                  <td>{{st.stream}}</td>
+                  {% endif %}
+                  {%endfor%}
+                </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- </div>
+              </div> -->
+      <div class="tab-pane" id="stream">
+        <div class="tab-pane" id="edit">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <!-- <th scope="col">ID</th> -->
+                  <!-- <th scope="col">Email ID</th> -->
+                  <th scope="col">Stream</th>
+                  <th scope="col">Duration (Semesters)</th>
+                  <th scope="col">Course</th>
+                  <!-- <th colspan="2" scope="col">Actions</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                {%for st in sts%}
+                <tr>
+                  <td>{{st.stream}}</td>
+                  <td>{{st.duration}}</td>
+                  <td>{{st.course}}</td>
+                </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+<!-- </div> -->
+<!-- </div> -->
+
+<!-- <div class="row">
+          <div class="col-12 col-lg-12 col-xl-12">
+            <div class="card">
+              <div class="card-header">Site Traffic
+                <div class="card-action">
+                  <div class="dropdown">
+                    <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+                      <i class="icon-options"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a class="dropdown-item" href="javascript:void();">Action</a>
+                      <a class="dropdown-item" href="javascript:void();">Another action</a>
+                      <a class="dropdown-item" href="javascript:void();">Something else here</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="javascript:void();">Separated link</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <ul class="list-inline">
+                  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Active</li>
+                  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Inactive</li>
+                </ul>
+                <div class="chart-container-1">
+                  <canvas id="chart1"></canvas>
+                </div>
+              </div>
+
+              <div class="row m-0 row-group text-center border-top border-light-3">
+                <div class="col-12 col-lg-4">
+                  <div class="p-3">
+                    <h5 class="mb-0">45.87M</h5>
+                    <small class="mb-0">Overall Visitor <span> <i class="fa fa-arrow-up"></i> 2.43%</span></small>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                  <div class="p-3">
+                    <h5 class="mb-0">15:48</h5>
+                    <small class="mb-0">Visitor Duration <span> <i class="fa fa-arrow-up"></i> 12.65%</span></small>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                  <div class="p-3">
+                    <h5 class="mb-0">245.65</h5>
+                    <small class="mb-0">Pages/Visit <span> <i class="fa fa-arrow-up"></i> 5.62%</span></small>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div> -->
+<!--End Row-->

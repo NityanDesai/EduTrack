@@ -1,0 +1,16 @@
+{
+    "params":
+    {
+        "local_server":"True",        
+        "local_uri":"mysql://root:@127.0.0.1/college", 
+        "prod_uri":"",
+        "gmail-user":"2017btechcsenityand@itmvu.in",
+        "gmail-password":"itmvu@2020",
+        "default_cl": 7,
+        "default_sl": 8,
+        "default_el": 8,
+        "weekdays": ["Sat", "Sun"],
+        "leave_bal": 16,
+        "passKey": "password"
+    }
+}

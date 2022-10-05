@@ -1,0 +1,158 @@
+{% extends "layout.html" %}
+{% block body %}
+<!--Start Dashboard Content-->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <ul class="nav nav-tabs nav-tabs-primary top-icon nav-justified">
+          <li class="nav-item">
+            <a href="javascript:void();" data-target="#profile" data-toggle="pill" class="nav-link active"><i
+              class="zmdi zmdi-calendar-check"></i> <span class="hidden-xs">Pending Leave approvals</span></a>
+            </li>
+          </ul>
+        <div class="tab-pane active" id="profile">
+          <div class="table-responsive">
+            {% if count >= 1 %}
+            <table class="table table-striped">
+              <thead>
+                <th>Employee</th>
+                <th>Reason</th>
+                <th>Leave type</th>
+                <th>No. of days</th>
+                <th>Start & End date</th>
+                <th colspan="2">Actions</th>
+              </thead>
+              <tbody>
+                {% for leave in leaves %}
+                <tr>
+                  {% if leave.display == 1 %}
+                  {% for fac in facs %}
+                  {% if leave.id == fac.id %}
+                  <td>{{fac.name}}</td>
+                  {% endif %}
+                  {% endfor %}
+                  <td>{{leave.reason}}</td>
+                  <td>{{leave.leavetype.upper()}}</td>
+                  <td>{{leave.no_of_leaves}}</td>
+                  {% if (leave.start_date.day == leave.end_date.day) %}
+                  <td>{{leave.end_date.strftime("%B")}} {{leave.start_date.day}}, {{leave.start_date.year}}</td>
+                  {% elif (leave.start_date.month == leave.end_date.month) %}
+                  <td>{{leave.end_date.strftime("%B")}} {{leave.start_date.day}} to
+                  {{leave.end_date.day}}, {{leave.start_date.year}}</td>
+                  {% elif (leave.start_date.year == leave.end_date.year) %}
+                  <td>{{leave.start_date.strftime("%B")}} {{leave.start_date.day}} to
+                  {{leave.end_date.strftime("%B")}} {{leave.end_date.day}}, {{leave.end_date.year}}
+                  {% else %}</td>
+                  <td>{{leave.start_date.strftime("%B")}} {{leave.start_date.day}}, {{leave.start_date.year}} to
+                    {{leave.end_date.strftime("%B")}} {{leave.end_date.day}}, {{leave.end_date.year}}</td>
+                  {% endif %}
+                  <form action="/approve/{{leave.leave_id}}" method="post">
+                    <td><button type="submit" class="btn badge float-left btn-success text-dark">Approve</button></td>
+                  </form>
+                  <form action="/reject/{{leave.leave_id}}" method="post">
+                    <td><button type="button" class="btn badge float-left btn-danger text-dark" data-toggle="modal"
+                        data-target="#exampleModalCenter">Reject</button></td>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content bg-dark">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Reason</h5>
+                            <button type="button" class="text-white close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="form-group">
+                                <label for="message-text" class="col-form-label">Reason for
+                                  rejection:</label>
+                                <textarea class="form-control" name="rejectReason" id="message-text" required></textarea>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn badge float-left text-white"
+                              data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn badge float-left btn-danger text-dark">Reject</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  {% endif %}
+                </tr>
+                {% endfor %}
+                {% else %}
+                <br><p style ="text-align:center;" class="container">No pending leaves approvals.</p>
+                {% endif %}
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+<!-- </div> -->
+<!-- </div> -->
+
+<!-- <div class="row">
+          <div class="col-12 col-lg-12 col-xl-12">
+            <div class="card">
+              <div class="card-header">Site Traffic
+                <div class="card-action">
+                  <div class="dropdown">
+                    <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+                      <i class="icon-options"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a class="dropdown-item" href="javascript:void();">Action</a>
+                      <a class="dropdown-item" href="javascript:void();">Another action</a>
+                      <a class="dropdown-item" href="javascript:void();">Something else here</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="javascript:void();">Separated link</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <ul class="list-inline">
+                  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Active</li>
+                  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Inactive</li>
+                </ul>
+                <div class="chart-container-1">
+                  <canvas id="chart1"></canvas>
+                </div>
+              </div>
+
+              <div class="row m-0 row-group text-center border-top border-light-3">
+                <div class="col-12 col-lg-4">
+                  <div class="p-3">
+                    <h5 class="mb-0">45.87M</h5>
+                    <small class="mb-0">Overall Visitor <span> <i class="fa fa-arrow-up"></i> 2.43%</span></small>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                  <div class="p-3">
+                    <h5 class="mb-0">15:48</h5>
+                    <small class="mb-0">Visitor Duration <span> <i class="fa fa-arrow-up"></i> 12.65%</span></small>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                  <div class="p-3">
+                    <h5 class="mb-0">245.65</h5>
+                    <small class="mb-0">Pages/Visit <span> <i class="fa fa-arrow-up"></i> 5.62%</span></small>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div> -->
+<!--End Row-->

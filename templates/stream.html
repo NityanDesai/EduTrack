@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Stream Table<a type="button" class="badge float-right badge-primary text-dark" href="/add_s">Add
+            New</a></h5>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <!-- <th scope="col">ID</th> -->
+                <th scope="col">Stream</th>
+                <th scope="col">Duration (Semesters)</th>
+                <th scope="col">Course</th>
+                <th scope="col">Course Fees</th>
+                <th colspan="2" scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%for st in sts%}
+              <tr>
+                <td>{{st.stream}}</td>
+                <td>{{st.duration}}</td>
+                <td>{{st.course}}</td>
+                <td>{{st.fees}}</td>
+                <td><a href="/edit_stream/{{st.stream_id}}" type="button" class="badge float-left badge-warning text-dark">Edit</a></td>
+                <td><a href="delete_stream/{{st.stream_id}}" type="button" class="badge float-left badge-danger text-dark">Delete</a></td>
+              </tr>
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

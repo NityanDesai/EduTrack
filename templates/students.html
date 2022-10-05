@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Student Table<a type="button" class="badge float-right badge-primary text-dark" href="add_stu">Add
+            New</a></h5>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <!-- <th scope="col">ID</th> -->
+                <th scope="col">Student name (Parent name)</th>
+                <th scope="col">Stream (Sem Course)</th>
+                <th scope="col">Parent Email</th>
+                <th colspan="2" scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%for par in all_pars%}
+              <tr>
+                <td>{{par.s_name}} ({{par.p_name}})</td>
+                {%for st in sts%}
+                {% if par.stream_id == st.stream_id %}
+                {% if par.sem == 1 %}
+                <td>{{st.stream}} ({{par.sem}}<sup>st </sup>{{st.course}})</td>
+                {% elif par.sem == 2 %}
+                <td>{{st.stream}} ({{par.sem}}<sup>nd </sup>{{st.course}})</td>
+                {% elif par.sem == 3 %}
+                <td>{{st.stream}} ({{par.sem}}<sup>rd </sup>{{st.course}})</td>
+                {% else %}
+                <td>{{st.stream}} ({{par.sem}}<sup>th </sup>{{st.course}})</td>
+                {% endif %}
+                {% endif %}
+                {%endfor%}
+                <td>{{par.p_email}}</td>
+                <td><a href="edit_parent/{{par.p_id}}" type="button" class="badge float-left badge-warning text-dark">Edit</a></td>
+                <td><a href="delete_parent/{{par.p_id}}" type="button" class="badge float-left badge-danger text-dark">Delete</a></td>
+                {%endfor%}
+              </tr>
+
+              <!-- <tr>
+                      <th scope="row">2</th>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

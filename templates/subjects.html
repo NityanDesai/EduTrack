@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Subject Table<a type="button" class="badge float-right badge-primary text-dark" href="add_s">Add
+            New</a></h5>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <!-- <th scope="col">ID</th> -->
+                <th scope="col">Subject</th>
+                <th scope="col">Stream (Course)</th>
+                <th scope="col">Semester</th>
+                <th colspan="2" scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%for sub in subs%}
+              <tr>
+                <td>{{sub.subject}}</td>
+                {%for st in sts%}
+                {% if sub.stream_id == st.stream_id %}
+                <td>{{st.stream}} ({{st.course}})</td>
+                {% endif %}
+                {%endfor%}
+                {% if sub.sem == 1 %}
+                <td>{{sub.sem}}<sup>st</sup></td>
+                {% elif sub.sem == 2 %}
+                <td>{{sub.sem}}<sup>nd</sup></td>
+                {% elif sub.sem == 3 %}
+                <td>{{sub.sem}}<sup>rd</sup></td>
+                {% else %}
+                <td>{{sub.sem}}<sup>th</sup></td>
+                {% endif %}
+                <td><a href="edit_subject/{{sub.subject_id}}" type="button" class="badge float-left badge-warning text-dark">Edit</a></td>
+                <td><a href="delete_subject/{{sub.subject_id}}" type="button" class="badge float-left badge-danger text-dark">Delete</a></td>
+                {%endfor%}
+              </tr>
+
+              <!-- <tr>
+                      <th scope="row">2</th>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

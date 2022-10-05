@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Faculty Table<a href="/add_f" type="button" class="badge badge-primary text-dark float-right">Add
+            New</a></h5>
+        {% for fac in all_fac %}
+        <hr>
+        <h5 class="card-title">
+          {{fac.name}} <div class="text-success float-right mx-1">₹ {{fac.salary}}</div></h6>
+          <a href="/delete_faculty/{{fac.id}}" type="button" class="badge badge-danger text-dark float-right mx-1">Delete</a>
+          <a href="/edit_faculty/{{fac.id}}" type="button" class="badge badge-warning text-dark float-right mx-1">Edit</a>
+          <h6 class="text-muted">{{fac.email}} <text class="float-right row mx-1">Leaves : <a class="badge badge-success text-dark" disabled>{{ fac.sl}} (SL) | {{fac.cl}} (CL) | {{fac.el}} (EL)</a></text>
+        </h5>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <th>Subject</th>
+              <th>Course</th>
+              <th>Stream</th>
+              <th>Semester</th>
+            </thead>
+            <tbody>
+              {% if fac.subjects["subjects"] != [] %}
+              {% for subject in fac.subjects["subjects"] %}
+              {% for sub in subs %}
+              {% if subject == sub.subject_id %}
+              <tr>
+                <td>{{sub.subject}}</td>
+                {% for st in sts %}
+                {% if st.stream_id == sub.stream_id %}
+                <td>{{st.course}}</td>
+                <td>{{st.stream}}</td>
+                {% endif %}
+                {% endfor %}
+                {% if sub.sem == 1 %}
+                <td>{{sub.sem}}<sup>st</sup></td>
+                {% elif sub.sem == 2 %}
+                <td>{{sub.sem}}<sup>nd</sup></td>
+                {% elif sub.sem == 3 %}
+                <td>{{sub.sem}}<sup>rd</sup></td>
+                {% else %}
+                <td>{{sub.sem}}<sup>th</sup></td>
+                {% endif %}
+              </tr>
+              {% endif %}
+              {% endfor %}
+              {% endfor %}
+              {% else %}
+              <td colspan="4">No subjects selected for this faculty.</td>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
