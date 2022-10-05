@@ -3,9 +3,9 @@
     {
         "local_server":"True",        
         "local_uri":"mysql://root:@127.0.0.1/college", 
-        "prod_uri":"",
-        "gmail-user":"2017btechcsenityand@itmvu.in",
-        "gmail-password":"itmvu@2020",
+        "prod_uri":"[PROD URI HERE]",
+        "gmail-user":"[YOUR EMAIL ID]",
+        "gmail-password":"[EMAIl ID PASsWORD]",
         "default_cl": 7,
         "default_sl": 8,
         "default_el": 8,
