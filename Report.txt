@@ -1,0 +1,101 @@
+1. Title : College Faculties Management *Give some gr8 title if you want
+2. Problem to be solved: College management digitalization (we'll manage everything from the portal) *Explain it more
+3. Project Category (Concepts/Technologies used): 
+	RDBMS
+	OOPS
+	Python (i.e. Flask module with Sqlalchemy for backend)
+	PyCharm, VS Code (IDE) and XAMPP
+	MySQL with PhpMyAdmin (for Database)
+	Apache (Server)
+	HTML, CSS, JavaScript with Bootsrap framework (for frontend)
+	API : Calendarific
+4. Analysis: include...
+	DFDs at least up to second level,
+	ER Diagrams:
+	Class Diagrams
+	Database Design etc. as per the project requirements
+		1) Users table (for Admin/faculties)
+		2) Subjects table
+		3) Stream table
+		4) Leaves tables
+	
+5. A complete structure which includes:
+	*Number of modules and their description to provide an estimation of the student’s effort
+		=> Python Modules used:
+			Flask, render_template, request, session, url_for, redirect, flash, SQLAlchemy, flask_mail, random, string, json, time, requests, datetime, calendarific, calendar, time, timedelta
+		=> Modules (Functions) in project:
+			Send/receive mail, login, logout, faculty dashboard, admin dashboard, add (faculty details, stream, subject), display (faculty details, stream, subject), update (faculty details, stream, subject),delete (faculty details, stream, subject), holidays, leave management (apply, approve/reject, reduction, restore, delete, types(SL/CL/EL)), notes/messages, flash notifications.
+	Data Structures as per the project requirements for all the modules: Arrays (list), touples, maps, sets, Linked List, Tree/Binary tree.
+	Process Logic of each module: Read the code
+	Testing process to be used: 
+		1. Unit Testing
+		2. Integration Testing
+		3. Regression Testing
+		4. Smoke Testing
+		5. Beta Testing
+		6. System Testing
+		7. Object-Oriented Testing
+	Reports generation ( Mention tentative content of report) ?
+6. Tools: [VS Code, PyCharm (IDEs), PphpMyAdmin, Bootstrap, XAMPP] / Platform: [Web (OS: Windows/Mac OS/Linux based OS)], Hardware: [Basic PC H/Ws] and Software Requirement specifications : [Potato PC with internet will do]
+Write down proper Platform of BCA Project : Web? I guess.
+Mention suitable Hardware & Software requirement: Potato PC with internet will do
+7. Are you doing this project for any Industry/Client? No
+8. Future scope and further enhancement of the project: Mention it properly in detail
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+LIST OF BROAD AREAS OF APPLICATION AND RELATED TOOLS
+FRONT END / GUI Tools :
+Visual Basic, Power Builder, X-Windows (X/lib, X/motif, X/Intrinsic), Oracle Developer 2000,VC++, Jbuilder
+RDBMS/BACK END :
+Oracle, Ingres, Sybase, Progress, SQL Plus, Versant, MY SQL, SQL Server, DB2
+LANGUAGES :
+C, C++, Java, VC++, C#, Php, Java
+SCRIPTING LANGUAGES :
+PERL, SHELL Scripts(Unix), TcL/TK
+RDBMS/BACK END :
+Oracle, Ingres, Sybase, Progress, SQL Plus, Versant, MY SQL, SQL Server, DB2, My Sql
+MIDDLE WARE (COMPONENT) TECHNOLOGIES :
+COM/DCOM, Active-X, EJB, Rational Rose, MSMQ, BEA, Message Q, MTS, CICS
+UNIX INTERNALS :
+Device Drivers, Pipes, RPC, Threads, Sockets
+ARCHITECTURAL CONCEPTS :
+CORBA, TUXEDO
+INTERNET TECHNOLOGIES :
+DHTML, Java script, VB Script, Perl & CGI script, HTML, Java, Active X, RMI, CORBA, SWING, JSP, ASP, XML, EJB, Java Beans, Java Servlets, Visual Age for JAVA, UML, VRML, WML, iPlanet, ATG, BigTalk, CSS, XSL, Oracle ASP server, VB.Net, AWT, J2EE, LDAP, ColdFusion
+NETWORKING TECHNOLOGIES :
+ATM, Frame Relay, TCP/IP, SNMP, GSM, VoIP, PPP, IP-PSTN, SONET/SDH
+WIRELESS TECHNOLOGIES :
+Blue Tooth, 3G, ISDN, EDGE
+REALTIME OPERATING SYSTEM/ EMBEDDED SKILLS :
+QNX, LINUX, OSEK, DSP, VRTX, RTXC, Nucleus
+OPERATING SYSTEMS :
+WINDOWS 95/98/2000/ME, WINDOWS NT, UNIX, LINUX, IRIX, SUN SOLARIS, HP/UX, PSOS, VxWorks, AS400, AIX, WINDOWS XP, DOS
+APPLICATIONS :
+Financial/ Manufacturing/ Multimedia/ Computer Graphics/ Instructional Design/ Database Management System/ Internet/ Intranet/ Computer Networking-Communication Software/E-Commerce/ ERP / MRP/ TCP/IP Internals/ Routing protocols/ Socket Programming/ Implementation of Switches & Routers
+Note: Projects should not be developed using the packages like Dbase, Foxpro, Visual Foxpro . Also, projects should not be developed using the combination of Visual Basic as the front end and MS-Access as the back end.
+
+
+GUIDE ELIGIBILITY 
+1. A person having M.Phil / Ph.D./M.Tech. in Computer Science.
+OR
+2. A person having B.E/B.Tech (Computer Science), MCA, M.Sc (Computer Science) with minimum 2 years experience in Industry / Teaching.
+
+
+Key Points at the time of Synopsis Submission
+Suitable title selection for bca project
+Make all necessary details about bca project which you want to developed.
+Actually Synopsis is also known as project proposal, by the help of this you get permission from the university to developed proposed project.
+Insert necessary diagram, platform, limitation, scope, bibliography in the synopsis.
+It should be 15 to 20 pages approximately
+
+
+ Approval of Synopsis
+After submission of synopsis, it is evaluated by university
+After evaluation and getting synopsis approval you can prepare project report
+
+
+Project Report 
+After approval you can start project report preparation
+for BCA MCA B.Tech Program it should be 90 to 150 pages and you have to develop any software/ website or any application. In project report source code must be inserted. After submission of project you called for viva. At the viva time must keep project report + CD (Source Code)
