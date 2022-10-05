@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 01, 2022 at 05:00 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.34
+-- Host: localhost
+-- Generation Time: Aug 28, 2022 at 06:05 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,15 +24,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `attendance`
+-- Table structure for table `exams`
 --
 
-CREATE TABLE `attendance` (
-  `a_id` int(11) NOT NULL,
-  `a_status` tinyint(4) NOT NULL,
-  `a_date` date NOT NULL,
-  `s_id` int(11) NOT NULL
+CREATE TABLE `exams` (
+  `test_id` int(11) NOT NULL,
+  `test_name` varchar(25) NOT NULL,
+  `date` date NOT NULL,
+  `stream_id` int(11) NOT NULL,
+  `sem` int(2) NOT NULL,
+  `total_marks` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `exams`
+--
+
+INSERT INTO `exams` (`test_id`, `test_name`, `date`, `stream_id`, `sem`, `total_marks`) VALUES
+(1, 'Mid Term Examinaion', '2022-09-01', 1, 3, 100),
+(2, 'Annual Examinaion', '2022-09-10', 1, 4, 100);
 
 -- --------------------------------------------------------
 
@@ -56,9 +66,10 @@ CREATE TABLE `leaves` (
 --
 
 INSERT INTO `leaves` (`leave_id`, `id`, `reason`, `leavetype`, `start_date`, `end_date`, `no_of_leaves`, `display`) VALUES
-(1, 6, 'Sharadi Khansi', 'sl', '2021-11-26', '2021-11-26', 1, 0),
-(2, 6, 'Bimari', 'sl', '2021-11-26', '2021-11-26', 1, 0),
-(3, 6, 'Travel', 'el', '2021-11-29', '2021-12-10', 10, 0);
+(1, 6, 'Covid 19', 'sl', '2021-11-26', '2021-11-26', 1, 0),
+(2, 6, 'Fever', 'sl', '2021-11-26', '2021-11-26', 1, 0),
+(3, 6, 'Travel', 'el', '2021-11-29', '2021-12-10', 10, 0),
+(14, 16, 'Mann nai thatu', 'sl', '2022-08-28', '2022-08-28', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -76,15 +87,19 @@ CREATE TABLE `parents` (
   `p_email` varchar(50) NOT NULL,
   `p_password` varchar(25) NOT NULL,
   `stream_id` int(11) NOT NULL,
-  `sem` int(11) NOT NULL DEFAULT 1
+  `sem` int(11) NOT NULL DEFAULT 1,
+  `attend_ind` smallint(6) NOT NULL,
+  `leave_bal` smallint(6) NOT NULL,
+  `fee_status` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `parents`
 --
 
-INSERT INTO `parents` (`p_id`, `rollno`, `s_name`, `p_name`, `s_email`, `s_password`, `p_email`, `p_password`, `stream_id`, `sem`) VALUES
-(1, 'IGNUVAD21CSETONY1A', 'Tony Stark', 'Howard Stark', 'tony.stark3000@starkindustires.com', 'IamIronMan', 'howard.stark3000@starkindustires.com', 'WeLoveYou3000', 1, 2);
+INSERT INTO `parents` (`p_id`, `rollno`, `s_name`, `p_name`, `s_email`, `s_password`, `p_email`, `p_password`, `stream_id`, `sem`, `attend_ind`, `leave_bal`, `fee_status`) VALUES
+(1, 'IGNUVAD2021TONY000', 'Samir ', 'Tripathi Ji', 'samir.t@incubspace.com', 'Samir123', 'tripathi.ji@incubespae.com', 'SamirT123', 1, 3, 0, 8, 0),
+(2, 'IGNUVAD2022ALAN160', 'Harshal Student', 'Harshal Parent ', 'hrshlstudent@haking.com', 'HarshalS1234', 'hrshlparent@haking.com', 'Harshal1234', 1, 4, 0, 7, 2);
 
 -- --------------------------------------------------------
 
@@ -169,25 +184,13 @@ CREATE TABLE `subjects` (
 
 INSERT INTO `subjects` (`subject_id`, `subject`, `stream_id`, `sem`) VALUES
 (1, 'Java', 1, 4),
-(2, 'History of Westeros', 2, 2),
+(2, 'History of India', 2, 2),
 (3, 'Relativity', 3, 3),
 (5, 'Digital Electronics', 1, 3),
 (14, 'Marketing', 8, 1),
-(15, 'Basic Civil Engg.', 9, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tests`
---
-
-CREATE TABLE `tests` (
-  `test_id` int(11) NOT NULL,
-  `test_name` varchar(25) NOT NULL,
-  `topics` varchar(100) NOT NULL,
-  `subject_id` int(11) NOT NULL,
-  `total_marks` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(15, 'Basic Civil Engg.', 9, 1),
+(16, 'Basics of C', 1, 4),
+(17, 'Basics of Python', 1, 7);
 
 -- --------------------------------------------------------
 
@@ -211,7 +214,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
   `username` varchar(25) NOT NULL,
-  `password` varchar(25) DEFAULT NULL,
+  `password` varchar(250) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `subjects` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`subjects`)),
   `salary` bigint(20) NOT NULL DEFAULT 0,
@@ -226,23 +229,23 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `email`, `subjects`, `salary`, `is_superuser`, `sl`, `cl`, `el`) VALUES
-(1, 'Harshal ', 'Admin123', '7heW4r10ck', 'admin_harshal@gmail.com', '{\"subjects\": []}', 0, 1, 8, 7, 16),
-(6, 'Jon Snow', 'Jon169', 'YouKnowNothing', 'jonsnow@thewall.com', '{\"subjects\": [2]}', 12300, 0, 6, 7, 4),
-(14, 'Albert Einstein', 'Albert37', 'TimeIsRelative69', 'alberteinstein@abcd.com', '{\"subjects\": [1, 3, 5]}', 123456, 0, 8, 7, 16),
-(16, 'Harshal Faculty', 'Harshal666', 'Harshal6969', 'harshal@faculty.com', '{\"subjects\": [1, 5]}', 12345, 0, 8, 7, 16),
+(1, 'Harshal Admin', 'Admin123', 'Admin@123', 'admin_harshal@gmail.com', '{\"subjects\": []}', 0, 1, 8, 7, 16),
+(6, 'Samir Tripathi', 'Sam123', 'SamT123', 'samirt@incub.com', '{\"subjects\": [2]}', 12300, 0, 6, 7, 4),
+(14, 'Albert Einstein', 'Albert111', 'TimeIsRelative69', 'alberteinstein@abcd.com', '{\"subjects\": [3, 14]}', 123456, 0, 8, 7, 16),
+(16, 'Harshal Faculty', 'Harshal669', 'Harshal6666', 'harshal.s@faculty.com', '{\"subjects\": [1,5]}', 12345, 0, 8, 0, 16),
 (19, 'Vivek Bindra', 'Vivek36', 'WVtXnGqM', 'vivekbindra@business.com', '{\"subjects\": [14]}', 12345, 0, 8, 7, 16),
-(20, 'Jitu Bhaiya', 'Jitu764', 'OmWvEDqs', 'jitubhaiya@aimers.com', '{\"subjects\": [3]}', 54321, 0, 8, 7, 16),
-(21, 'Laeke Dhrumil', 'Laeke318', 'CGUgJijh', 'laeke_aana@itmvu.in', '{\"subjects\": [15]}', 150, 0, 8, 7, 16);
+(27, 'Harry faculty', 'Harry@123', 'Cod3withHarry', 'harry@codewithharry.com', '{\"subjects\": [17]}', 10000, 0, 6, 7, 8),
+(28, 'Barkha', 'Barkha123', 'Barkha@123', 'barkha@itus.com', '{\"subjects\": [16]}', 5000, 0, 0, 0, 0);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `attendance`
+-- Indexes for table `exams`
 --
-ALTER TABLE `attendance`
-  ADD PRIMARY KEY (`a_id`);
+ALTER TABLE `exams`
+  ADD PRIMARY KEY (`test_id`);
 
 --
 -- Indexes for table `leaves`
@@ -283,12 +286,6 @@ ALTER TABLE `subjects`
   ADD KEY `foreign key` (`stream_id`);
 
 --
--- Indexes for table `tests`
---
-ALTER TABLE `tests`
-  ADD PRIMARY KEY (`test_id`);
-
---
 -- Indexes for table `updates`
 --
 ALTER TABLE `updates`
@@ -305,22 +302,22 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `attendance`
+-- AUTO_INCREMENT for table `exams`
 --
-ALTER TABLE `attendance`
-  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `exams`
+  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `parents`
 --
 ALTER TABLE `parents`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `remarks`
@@ -344,13 +341,7 @@ ALTER TABLE `stream`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT for table `tests`
---
-ALTER TABLE `tests`
-  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `updates`
@@ -362,7 +353,7 @@ ALTER TABLE `updates`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables
